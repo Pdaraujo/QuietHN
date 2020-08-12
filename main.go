@@ -37,7 +37,7 @@ func main() {
 }
 
 func handler(numStories int, tpl *template.Template) http.HandlerFunc {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 		start := time.Now()
 		var client hn.Client
 		ids, err := client.TopItems()
@@ -67,7 +67,7 @@ func handler(numStories int, tpl *template.Template) http.HandlerFunc {
 			http.Error(w, "Failed to process the template", http.StatusInternalServerError)
 			return
 		}
-	})
+	}
 }
 
 func isStoryLink(item item) bool {
